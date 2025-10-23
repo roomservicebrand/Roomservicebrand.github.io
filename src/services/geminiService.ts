@@ -1,11 +1,26 @@
 
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable is not set");
-}
+const resolveApiKey = (): string | undefined => {
+  const env = import.meta.env;
+  const key = env?.VITE_GEMINI_API_KEY ?? env?.VITE_API_KEY;
+  return typeof key === "string" && key.trim() !== "" ? key : undefined;
+};
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let ai: GoogleGenAI | null = null;
+
+const getClient = (): GoogleGenAI => {
+  if (!ai) {
+    const apiKey = resolveApiKey();
+    if (!apiKey) {
+      throw new Error(
+        "Gemini AI features are currently unavailable because the API key has not been configured."
+      );
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 export const generateInsights = async (): Promise<string> => {
   try {
@@ -16,7 +31,9 @@ export const generateInsights = async (): Promise<string> => {
       Do not include any other HTML tags like <ul>, <li>, <b>, or <br>. Ensure the output is clean HTML.
     `;
 
-    const response = await ai.models.generateContent({
+    const client = getClient();
+
+    const response = await client.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
       config: {
@@ -47,7 +64,9 @@ export const draftEmail = async (yourName: string, companyName: string, outreach
       ...
     `;
 
-    const response = await ai.models.generateContent({
+    const client = getClient();
+
+    const response = await client.models.generateContent({
       model: "gemini-2.5-flash",
       contents: prompt,
     });
@@ -81,12 +100,14 @@ Amit is a forward-thinking, results-driven healthcare executive with over 8 year
 Your role is to act as a first point of contact, providing information about Amit's skills, experience, and achievements. You can answer questions like "What is Amit's experience with Utilization Review?" or "Can you detail his major achievements?". Be conversational and friendly.
 `;
 
-let chat: Chat; // Maintain chat session
+let chat: Chat | undefined; // Maintain chat session
 
 export const chatWithAmitAI = async (message: string): Promise<string> => {
   try {
     if (!chat) {
-      chat = ai.chats.create({
+      const client = getClient();
+
+      chat = client.chats.create({
         model: 'gemini-2.5-flash',
         config: {
           systemInstruction: AMIT_AI_SYSTEM_PROMPT,
