@@ -4,9 +4,11 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: 'src',
+  // The 'root' property has been removed to use the project root.
+  // root: 'src',
   build: {
-    outDir: '../dist',
+    // The output directory is now 'dist' relative to the project root.
+    outDir: 'dist',
     emptyOutDir: true,
   },
 });
