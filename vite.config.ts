@@ -4,12 +4,15 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // The 'root' property has been removed, so Vite will correctly
-  // use the project's root directory, where your main index.html is located.
+  // This configuration relies on Vite's sensible defaults:
+  // - The project root contains the main index.html entry point.
+  // - The build output will be placed in the 'dist' directory.
+  // This standard setup is robust and should resolve build path issues.
   build: {
-    // The output directory is now 'dist', relative to the project root.
     outDir: 'dist',
     emptyOutDir: true,
-    // The misconfigured `rollupOptions: { input: 'src' }` is removed.
+    // FIX: The explicit 'rollupOptions.input' was removed. It was redundant as Vite's default
+    // is to use 'index.html' from the project root. This also fixes the TypeScript error
+    // "Property 'cwd' does not exist on type 'Process'".
   },
 });
