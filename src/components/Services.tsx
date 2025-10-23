@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Services: React.FC = () => {
@@ -20,11 +19,12 @@ const Services: React.FC = () => {
 
                         <a 
                             href="#" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="mt-8 inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-semibold text-center transition-all duration-300 hover:bg-green-700 hover:scale-105"
+                            onClick={(e) => e.preventDefault()}
+                            aria-disabled="true"
+                            role="button"
+                            className="mt-8 inline-block bg-gray-400 text-white px-8 py-3 rounded-lg font-semibold text-center cursor-not-allowed"
                         >
-                            <i className="fas fa-gavel mr-2"></i>View Service on Fiverr
+                            <i className="fas fa-gavel mr-2"></i>View Service on Fiverr (Coming Soon)
                         </a>
                     </div>
                     <div className="text-center" data-aos="fade-left" data-aos-delay="200">

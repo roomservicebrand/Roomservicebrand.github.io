@@ -13,12 +13,14 @@ const Hero: React.FC = () => {
                             <a href="#contact" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-center transition-all duration-300 hover:bg-blue-700 hover:scale-105">
                                 <i className="fas fa-paper-plane mr-2"></i>Let's Connect
                             </a>
-                            <a 
-                              href="/amit-mishra-resume.pdf"
-                              download="Amit_Mishra_Resume.pdf"
-                              className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold text-center transition-all duration-300 hover:bg-blue-600 hover:text-white dark:border-blue-500 dark:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white hover:scale-105"
+                            <a
+                              href="#"
+                              onClick={(e) => e.preventDefault()}
+                              aria-disabled="true"
+                              role="button"
+                              className="border-2 border-gray-400 text-gray-400 px-8 py-3 rounded-lg font-semibold text-center cursor-not-allowed transition-all duration-300"
                             >
-                              <i className="fas fa-download mr-2"></i>Download Resume
+                              <i className="fas fa-download mr-2"></i>Resume Coming Soon
                             </a>
                         </div>
                     </div>
