@@ -1,6 +1,15 @@
-/**
- * This file is a duplicate of the main application entry point located at `/src/index.tsx`.
- * The Vite build process is configured to use the file in `/src`, so this file is unused.
- * Its content has been removed to prevent any potential build tool confusion.
- * It can be safely deleted.
- */
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error("Could not find root element to mount to");
+}
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
